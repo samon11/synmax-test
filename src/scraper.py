@@ -5,7 +5,7 @@ from db import WellRepository
 
 class WellPageScraper:
     """
-    Class to scrape well page of a given API number
+    Class to scrape well page of a given API number.
     """
     def __init__(self, api: str):
         self.api = api.strip()
@@ -23,7 +23,7 @@ class WellPageScraper:
     @staticmethod
     def _parse_bool(value: str) -> bool:
         """
-        Helper function to parse boolean values from string
+        Helper method to parse boolean values from string.
         """
         if value:
             return value.lower() in ["yes", "true"]
@@ -32,7 +32,7 @@ class WellPageScraper:
     @staticmethod
     def _format_date(date: str) -> str:
         """
-        Helper function to format the date string from MM/DD/YYYY to YYYY-MM-DD for SQLite storage
+        Helper method to format the date string from MM/DD/YYYY to YYYY-MM-DD for SQLite storage.
         """
         if date:
             return datetime.strptime(date, "%m/%d/%Y").strftime("%Y-%m-%d")
@@ -40,7 +40,8 @@ class WellPageScraper:
 
     def _get_span(self, key: str, dtype=str):
         """
-        Return the text of the span tag with the given `key` as the HTML tag's `id` prefixed with `self._base_span_id`
+        Return the text of the span tag with the given `key` as the HTML tag's `id`
+        prefixed with `self._base_span_id`.
         """
         try:
             value = self._soup.find("span", id=self._base_span_id + key).text
@@ -55,7 +56,7 @@ class WellPageScraper:
     
     def _get_surface_location(self) -> str:
         """
-        Helper function to return concatenated surface location
+        Helper function to return concatenated surface location.
         """
         location = [
             self._get_span("Location_lblLocation"), 
@@ -73,7 +74,7 @@ class WellPageScraper:
             "CRS": None
         }
 
-        # coords_str of the form "35.1234,-104.1234 (NAD83)"
+        # coords_str is of the form "35.1234,-104.1234 NAD83"
         coords_str = self._get_span("Location_lblCoordinates")
         if coords_str:
             # CRS is the last value in the string after the " "
@@ -86,7 +87,7 @@ class WellPageScraper:
         
     def run(self) -> dict:
         """
-        Run the scraper and return the parsed model as a dictionary
+        Run the scraper and return the parsed model as a dictionary.
         """
         model = {
             "API":                          self.api,
@@ -127,6 +128,7 @@ def main():
 
             scraper = WellPageScraper(api)
             
+            # scrape the model from the page and insert into db
             model = scraper.run()
             repo.insert(model)
 

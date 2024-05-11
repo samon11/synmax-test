@@ -2,7 +2,7 @@ import sqlite3
 
 class WellRepository:
     """
-    Repository class to interact with the SQLite database of well data
+    Repository class to interact with the SQLite database of well data.
     """
     def __init__(self) -> None:
         self._conn = sqlite3.connect('wells.db', check_same_thread=False)
@@ -39,6 +39,9 @@ class WellRepository:
         self._conn.commit()
 
     def insert(self, model: dict) -> None:
+        """
+        Insert a single new well data model into the database.
+        """
         # dynamically generate the SQL query based on the model
         keys = ', '.join(f'"{key}"' for key in model.keys())
         placeholders = ', '.join('?' for _ in model)
@@ -48,11 +51,17 @@ class WellRepository:
         self._conn.commit()
 
     def get_well(self, api: str) -> dict:
+        """
+        Get well data by API number.
+        """
         self._cursor.execute('SELECT * FROM api_well_data WHERE "API" = ?', (api,))
         result = self._cursor.fetchone()
         return dict(result) if result else None
 
     def get_all_coords(self) -> list:
+        """
+        Get all well API numbers and lat/long coordinates.
+        """
         query = '''
             SELECT "API", "Latitude", "Longitude" FROM api_well_data
         '''
