@@ -5,6 +5,10 @@ from db import WellRepository
 repo = WellRepository()
 app = Flask(__name__)
 
+@app.route("/hello", methods=["GET"])
+def hello_world():
+    return "Hello World!"
+
 @app.route("/well", methods=["GET"])
 def get_well_data():
     api = request.args.get("api")
@@ -33,4 +37,4 @@ def get_wells_in_polygon():
     return jsonify(results)
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(host='0.0.0.0', port=59192, debug=False)
