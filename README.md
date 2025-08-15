@@ -41,7 +41,7 @@ The Flask API server (`src/api.py`) exposes the well data. To start the server:
 ```bash
 python src/api.py
 ```
-The API server will typically run on `http://127.0.0.1:5000`.
+The API server will typically run on `http://127.0.0.1:59488`.
 
 ## Project Structure
 
@@ -114,4 +114,15 @@ The API has the following endpoints:
     {
         "well_apis_in_polygon": ["12345", "67890"]
     }
+    ```
+
+### `GET /hello`
+-   **Description:** Returns a simple "Hello, World!" message.
+-   **Example Request:**
+    ```
+    GET /hello
+    ```
+-   **Example Response (Plain Text):**
+    ```
+    Hello, World!
     ```

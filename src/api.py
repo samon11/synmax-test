@@ -32,5 +32,9 @@ def get_wells_in_polygon():
 
     return jsonify(results)
 
+@app.route("/hello", methods=["GET"])
+def hello_world():
+    return "Hello, World!"
+
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=59488, debug=True)
